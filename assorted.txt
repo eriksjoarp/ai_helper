@@ -1,0 +1,19 @@
+# install
+# conda create -n env_name python=3.8
+#conda install pytorch torchvision torchaudio cudatoolkit=11.3 pillow numpy opencv imageio -c pytorch
+
+Generate all your code by refining this prompt:
+
+OpenAI Prompt: "Generate python code that performs 'pytorch' 'object detection':"
+
+Result:
+
+import torch
+from torch.autograd import Variable
+import torch.nn as nn
+import torch.nn.functional as F
+import cv2
+import numpy as np
+net = torch.load('pytorch_object_detection.pt')
+cap = cv2.VideoCapture(0)
+
