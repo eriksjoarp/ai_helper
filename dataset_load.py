@@ -4,7 +4,7 @@ import constants_dataset as c_d
 import constants_ai_h as c_ai_h
 sys.path.insert(1, c_ai_h.DIR_AI_HELPER)
 sys.path.insert(1, c_ai_h.DIR_HELPER)
-import helper as h
+import helpers as h
 import ml_helper as ml_h
 import constants_helper as c_h
 
