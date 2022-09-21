@@ -25,7 +25,7 @@ import numpy as np
 import constants_ai_h as c_ai_h
 
 sys.path.append(c_ai_h.DIR_HELPER)
-import helper as h
+import helpers as h
 
 
 # Save pondas dataframe
