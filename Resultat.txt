@@ -1,0 +1,3 @@
+Resultat körningar
+EuroSat RGB
+    tiny_v1_b64_lr_2e-4_ep5
