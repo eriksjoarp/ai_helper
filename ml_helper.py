@@ -17,15 +17,14 @@
 ###########################################
 
 import os, sys
-import pandas
 import pandas as pd
 import numpy as np
 #from pandas_profiling import ProfileReport
 #import pandas_profiling
 import constants_ai_h as c_ai_h
+import torch
 
-sys.path.append(c_ai_h.DIR_HELPER)
-import helpers as h
+from ..helper import helpers as h
 
 
 # Save pondas dataframe
@@ -114,28 +113,6 @@ def dataframe_drop_columns(df, cols):
             df.drop([col], axis='columns', inplace=True)
     print(df.head())
 
-
-
-# Check if string contains substring
-def contains_substring(fullstring, substring, lowercase=True):
-    if lowercase:
-        substring = substring.lower()
-        fullstring = fullstring.lower()
-    if substring in fullstring:
-        return 1
-    else:
-        return 0
-
-# Hex to int
-def hex_to_int(hex):
-    if '0x' in str(hex):
-        #print('hex ' + hex + ' int ' + str(int(hex, 16)))
-        hex = hex[2:]
-        return int(hex, 16)
-    else:
-        return hex
-
-
 # Create a new column based on text in another column, if it contains a substring it returns 1 otherwise 0
 def df_column_create_contains_text(df, new_column_name , column_from , substring, lowercase = True):
     # Create new column
@@ -158,8 +135,21 @@ def df_rows_with_hex(df, col):
     rows_with_NaN = df[row_has_NaN]
     return rows_with_NaN
 
+def is_cuda_available():
+    USE_CUDA = torch.cuda.is_available()
+    if USE_CUDA:
+        print('CUDA is available')
+        print('GPUs ' + str(torch.cuda.device_count()))
+        print(torch.cuda.get_device_name(0))
+
+        print('__CUDA VERSION:', torch.version.cuda)
+        print('__CUDNN VERSION:', torch.backends.cudnn.version())
+    else:
+        print('Cannot find GPU')
+        return False
+    return True
+
 
 
 if __name__ == "__main__":
-
-    dataframe_explore()
+    pass
