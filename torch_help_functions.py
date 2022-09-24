@@ -1,6 +1,6 @@
 import torch
 import torchvision
-import constants as c
+import constants_ai_h as c
 
 def is_cuda_available():
     USE_CUDA = torch.cuda.is_available()
@@ -13,6 +13,9 @@ def is_cuda_available():
         print('__CUDNN VERSION:', torch.backends.cudnn.version())
     else:
         print('Cannot find GPU')
+        return False
+    return True
+
 
 def transform_normalize_imagenet():
     transform_imagenet = torchvision.transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
@@ -90,7 +93,6 @@ def layers_no_grad(model, layers_with_no_grad = 1):
             param.requires_grad = True
         layer_now += 1
 
-
 def layer_requires_grad(model):
     i = 0
     for param in model.parameters():
@@ -98,6 +100,8 @@ def layer_requires_grad(model):
         if param.requires_grad == True:
             print(str(i) + ' requires grad')
     print(str(i) + ' layers')
+
+
 
 
 if __name__ == "__main__":

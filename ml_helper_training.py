@@ -1,5 +1,6 @@
 import os
 import torch
+import constants_ai_h as c
 
 def learning_rate_change2(learning_rate_start, epoch_now, epochs_change , factor_change = 0.33, warmup_epoch_levels = 4, warmup_epochs_per_level = 3, warmpup_factor_change = 2, warmup_factor_lower_than_max_lr = 20, learning_rate_max_test = False):
     starting_epoche = epoch_now - warmup_epoch_levels * warmup_epochs_per_level
@@ -93,12 +94,13 @@ def get_all_preds(network, dataloader):
 
     return all_preds
 
+
 # save best model
-def save_best_model():      #   ToDo    fix parameters
-    if not LR_INCREASE:
+def save_best_model(lr_increase, num_correct, num_samples, acc_best, model_name, running_time, model, logfile, model_name_best_old, epoch):      #   ToDo    fix parameters
+    if not lr_increase:
         if float(num_correct) / float(num_samples) * 100 > acc_best:
             acc_best = float(num_correct) / float(num_samples) * 100
-            model_name = MODEL_NAME + '_acc_' + str(acc_best) + '_duration_' + str(running_time) + '.pth'
+            model_name = model_name + '_acc_' + str(acc_best) + '_duration_' + str(running_time) + '.pth'
             path = os.path.join(c.DIR_MODELS_SAVE, model_name)
             torch.save(model.state_dict(), path)
             logfile.append('NEW_BEST_ACCURACY,' + str(acc_best) + ',EPOCH,' + str(epoch))

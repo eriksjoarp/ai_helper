@@ -1,16 +1,20 @@
 import torch
 import time
 import torch.optim as optim
-import torch.nn as nn
-from ..ai_helper import ml_helper
 import ml_helper_training
+from ..helper import erik_functions_files
+
 import constants_ai_h as c
 import os
+import torch_help_functions
+import torch_help
+import torchvision
+
 
 
 def image_trainer(model, train_dl, val_dl, test_dl, criterion, optimizer, lr=0.0001, lr_scheduler = 'learning_rate_change', epochs = 20, debug = False):
     # preparing
-    if debug: ml_helper.is_cuda_available()
+    if debug: torch_help_functions.is_cuda_available()
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device=device)
 
@@ -114,7 +118,7 @@ def model_validate(p, val_dl, model, epoch, criterion, lr_new, device):
 def model_train(p):
     # training
     #p[c.DEVICE] = ('cuda' if torch.cuda.is_available() else 'cpu')
-    devices = t_h_f.available_gpus()
+    devices = torch_help_functions.available_gpus()
 
     print('GPUs found : ' + str(len(devices)))
     device = torch.device(p[c.DEVICE])
@@ -135,7 +139,7 @@ def model_train(p):
     model = torchvision.models.mobilenet_v3_large(pretrained=True)
 
     # def transfer_learning(model, num_outputs, layer_type_last_new = c.MODEL_OUTPUT_LAYER_TYPE_LINEAR, layers_with_no_grad = 1,debug = False):
-    t_h.transfer_learning(model, 10, c.MODEL_OUTPUT_LAYER_TYPE_LINEAR, 3, True)
+    torch_help.transfer_learning(model, 10, c.MODEL_OUTPUT_LAYER_TYPE_LINEAR, 3, True)
 
     #t_h.model_replace_last_layer3(model, 10, c.MODEL_OUTPUT_LAYER_TYPE_LINEAR, True)
 
@@ -151,16 +155,16 @@ def model_train(p):
 
     #print(model)
 
-    t_h_f.model_parameters(model, True)
+    torch_help_functions.model_parameters(model, True)
     print(type(model))
 
     model = model.to(device=device)
 
     # optimizer
-    optimizer = t_h.optimizer_load(p, model.parameters(), p[c.LR])
+    optimizer = torch_help.optimizer_load(p, model.parameters(), p[c.LR])
 
     # loss
-    criterion = t_h.criterion_load(p)
+    criterion = torch_help.criterion_load(p)
 
     p[c.LOGFILE].append(c.START_TIME + ',' + str(p[c.START_TIME]))
 
@@ -175,14 +179,14 @@ def model_train(p):
         #lr_new = ai_h.learning_rate_change2(p[c.LR], epoch, 4, 0.75, 2 * 5, 1, 1.41, 40, p[c.LR_INCREASE])
 
         # learning_rate_exponential(epochs, epoch_now,      learning_rate_max, factor,      warm_up_epochs=10, epochs_plateau=5,        epochs_linear=40, learning_rate_max_test=False):
-        lr_new = ai_h.learning_rate_exponential(p[c.EPOCHS], epoch, p[c.LR], p[c.LR_FACTOR], 3, 3, 10, p[c.LR_INCREASE])
+        lr_new = ml_helper_training.learning_rate_exponential(p[c.EPOCHS], epoch, p[c.LR], p[c.LR_FACTOR], 3, 3, 10, p[c.LR_INCREASE])
         #lr_new = p[c.LR]
 
-        if epoch == 0: t_h_f.layers_no_grad(model, 10)
+        if epoch == 0: torch_help_functions.layers_no_grad(model, 10)
         #if epoch == 3: t_h_f.layers_no_grad(model, 5)
         #if epoch == 10: t_h_f.layers_no_grad(model, 10)
 
-        t_h_f.layer_requires_grad(model)
+        torch_help_functions.layer_requires_grad(model)
 
 
 
@@ -223,5 +227,5 @@ def model_train(p):
 
         # write logfile to disk
         path = os.path.join(c.DIR_LOGS, p[c.LOGFILE_NAME])
-        if not ai_h_f.write_list_to_file(path, p[c.LOGFILE]):
+        if not erik_functions_files.write_list_to_file(path, p[c.LOGFILE]):
             print('ERROR could not print logfile')

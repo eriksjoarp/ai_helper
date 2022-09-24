@@ -44,7 +44,7 @@ def dataset_transforms(p):
     print(str(transform_train))
     return transform_train, transform_val, transform_test
 
-
+'''
 transform_train = transforms.Compose([ #transforms.ToPILImage(),
                                   transforms.RandomRotation(20),
                                   #transforms.RandomResizedCrop((22,22)),
@@ -55,7 +55,7 @@ transform_train = transforms.Compose([ #transforms.ToPILImage(),
                                   transforms.ToTensor(),
                                   transforms.Normalize((0.5,), (1,))])
 
-transform_traing = transforms.Compose([
+transform_training = transforms.Compose([
                                 transforms.ToTensor(),
                                 transforms.Normalize((0.5,), (1,))])
 transform_test = transforms.Compose([
@@ -73,7 +73,7 @@ transform_train = transforms.Compose(
     trans_normalize])
 
 transform_test = transforms.Compose([transforms.Resize((227,227)), transforms.ToTensor(), trans_normalize])
-
+'''
 
 
 
@@ -114,4 +114,6 @@ def transform_normalize_cifar10():
 
 ######################              SPLIT                 #######################
 
-train_ds, _ = random_split(train_ds, [train_size, val_size])
+def ds_random_split(ds_train, val_size, train_size):
+    train_ds_new , val_ds_new = random_split(ds_train, [train_size, val_size])
+    return train_ds_new, val_ds_new
