@@ -26,7 +26,7 @@ def image_trainer(model, train_dl, val_dl, test_dl, criterion, optimizer, lr=0.0
         loss_ep = 0
 
         if lr_scheduler == 'learning_rate_change':
-            lr_new = ml_helper_training.learning_rate_change(lr, epoch, 10, 0.33, 2)    # ToDo make new function
+            lr_new = ml_helper_training.learning_rate_change2(lr, epoch, 10, 0.33, 2)    # ToDo make new function
             optimizer = optim.Adam(model.parameters(), lr=lr_new)
 
         for batch_idx, (data, targets) in enumerate(train_dl):

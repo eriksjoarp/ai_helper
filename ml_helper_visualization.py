@@ -7,10 +7,14 @@ import pandas as pd
 import torch
 
 
-def show_image_grid(images, grid_size_x, grid_size_y = False, labels = False, gray = False ):
+# images as numpyarrays
+def show_image_grid(images, grid_size_x, grid_size_y = False, labels = False, gray = False, permutate = True, plot_size=[15.00, 10.00]):
     if grid_size_y == False: grid_size_y = grid_size_x
     if len(images) < grid_size_y * grid_size_x:
         print('ERROR, too few images to show.')
+
+    plt.rcParams["figure.figsize"] = plot_size
+    plt.rcParams["figure.autolayout"] = True
 
     f, axarr = plt.subplots(grid_size_x, grid_size_y)
 
@@ -18,15 +22,21 @@ def show_image_grid(images, grid_size_x, grid_size_y = False, labels = False, gr
 
     for x in range(grid_size_x):
         for y in range(grid_size_y):
-            image_permutated = images[counter].permute(1, 2, 0)
+            axarr[x, y].axis('off')
+            if permutate:
+                image_permutated = images[counter].permute(1, 2, 0)
+            else:
+                image_permutated = images[counter]
+
             if not(gray):
                 axarr[x, y].imshow(image_permutated)
             else:
                 axarr[x, y].imshow(image_permutated, cmap='gray')
 
             if labels:
-                axarr[x, y].set_title(labels[counter])
+                axarr[x, y].set_title(labels[counter], fontsize=12)
             counter += 1
+
     plt.show()
 
 
@@ -94,6 +104,7 @@ def plot_confusion_matrix(cm,
     plt.show()
 
 
+# images as tensors
 def show_grid(images, labels):
     # create a grid
     plt.figure(figsize=(15,10))
@@ -101,6 +112,7 @@ def show_grid(images, labels):
     print(f"image tensor: {images.shape}")
     print(f"class labels: {labels}")
     plt.imshow(np.transpose(grid, axes=(1,2,0)), cmap='gray')
+    plt.show()
 
 
 def confusion_matrix_(net, testloader, path_save):
@@ -128,3 +140,17 @@ def confusion_matrix_(net, testloader, path_save):
     plt.figure(figsize=(12, 7))
     sn.heatmap(df_cm, annot=True)
     plt.savefig(path_save)
+
+def plot_list(lista, show = True, save_path = None, label = ''):
+    plt.plot(lista, color='magenta', marker='o',mfc='pink' ) #plot the data
+    plt.xticks(range(0,len(lista)+1, 1)) #set the tick frequency on x-axis
+
+    plt.ylabel('data') #set the label for y axis
+    plt.xlabel('index') #set the label for x-axis
+    plt.title(label) #set the title of the graph
+
+    if save_path != None:
+        plt.savefig(save_path)
+
+    plt.show() #display the graph
+

@@ -1,15 +1,24 @@
+#!/usr/bin/env python3
 import sys, os
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
+import torchvision
+import datasets     # huggingface
 
 import constants_dataset as c_d
 import constants_ai_h as c
 import dataset_load_helper as ds_l_h
 
-from ..helper import helpers as h
-import ml_helper as ml_h
-from ..helper import constants_helper as c_h
-import torchvision
+############################        IMPORT HELPER MODULES       ############################
+sys.path.append(os.getcwd() + '/..')
+import python_imports
+for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
+############################################################################################
+
+import helpers as h
+import constants_helper
+import pandas_helper
+import torch_help_functions
 
 
 # load one or all datasets from ctu13, None loads all rows
@@ -18,14 +27,14 @@ def dataset_load_ctu13(CTU13_nr=1, NR_ROWS=None):
 
     DIR_DATASET_CTU13 = c_d.DIR_DATASET_CTU13
     URL_CTU13 = c_d.URL_CTU13
-    FILE_EXTENSION = c_h.FILE_EXTENSION_BINETFLOW
+    FILE_EXTENSION = constants_helper.FILE_EXTENSION_BINETFLOW
 
     # update dataset if necessarry
     #h.download_file(URL_CTU13, DATASET_BASEDIR)
 
     # load datset into a dataframe
     DIR_DATASET_CTU13_NRX = os.path.join(DIR_DATASET_CTU13, str(CTU13_nr))
-    df = ml_h.dataframes_load(DIR_DATASET_CTU13_NRX, FILE_EXTENSION, NR_ROWS, c_d.CONCATENATE_TRUE)
+    df = pandas_helper.dataframes_load(DIR_DATASET_CTU13_NRX, FILE_EXTENSION, NR_ROWS, c_d.CONCATENATE_TRUE)
     return df
 
 def MNIST(dir_dataset, transforms_train, transforms_test, download = True):
@@ -50,17 +59,16 @@ def Cifar10(p, transform_train, transform_val, tranform_test = None):
     print('train size : ' + str(len(train_ds)))
     print('img_size : ' + str(p[c.AUGMENT_CROP]))
 
-    train_ds, _ = random_split(train_ds, [train_size, val_size])
+    train_ds, _ = torch_help_functions.random_split(train_ds, [train_size, val_size])
     # test_ds = torchvision.datasets.CIFAR10(c.DIR_DATASETS, train=False, download=True, transform=transform_test)
     # val_ds = torchvision.datasets.CIFAR10(c.DIR_DATASETS, train=False, download=True, transform=transform_test)
 
     return train_ds, val_ds, test_ds
 
 
-def CIFAR10():
-    train_set = torchvision.datasets
-
 def eurosat_rgb():      # ToDo add transforms as a paramter
+    print('Loading dataset : EuroSat RGB ')
+
     transform_mean = [0.485, 0.456, 0.406]
     transform_std = [0.229, 0.224, 0.225]
 
@@ -118,8 +126,8 @@ if __name__ == "__main__":
     LABEL_FROM = 'Label'
     SUBSTRING = 'botnet'
 
-    ml_h.df_column_create_contains_text(ctu13_1, LABEL, LABEL_FROM, SUBSTRING)
+    pandas_helper.df_column_create_contains_text(ctu13_1, LABEL, LABEL_FROM, SUBSTRING)
 
     print(ctu13_1.head())
 
-    ml_h.pandas_dataframe_describe(ctu13_1)
+    pandas_helper.pandas_dataframe_describe(ctu13_1)

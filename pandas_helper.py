@@ -5,8 +5,15 @@ import numpy as np
 #import pandas_profiling
 import constants_ai_h as c_ai_h
 import torch
-from ..helper import erik_functions_data
-from ..helper import erik_functions_files
+
+############################        IMPORT HELPER MODULES       ############################
+sys.path.append(os.getcwd() + '/..')
+import python_imports
+for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
+############################################################################################
+
+import erik_functions_data
+import erik_functions_files
 
 
 # Save pondas dataframe

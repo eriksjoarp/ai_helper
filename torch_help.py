@@ -10,12 +10,14 @@ import torch.nn.functional as F
 import constants_ai_h as c
 import torch_help_functions
 
+
 def datasets(action = 'list', module = 'torchvision'):
     if action == 'list':
         modules = torchvision.datasets
         for dataset in modules:
             print(dataset)
 
+# torchvision datasets
 def torchvision_datasets(print_names = False):
     dataset_names = dir(torchvision.datasets)
     dataset_names_return = []
@@ -25,10 +27,11 @@ def torchvision_datasets(print_names = False):
             if print_names: print(dataset_name)
     return dataset_names_return
 
-
+# number of parameters for a model
 def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
+# finds the mean and std of the dataset
 def get_mean_and_std(dataloader):
     channels_sum, channels_squared_sum, num_batches = 0, 0, 0
     for data, _ in dataloader:
@@ -43,6 +46,7 @@ def get_mean_and_std(dataloader):
     std = (channels_squared_sum / num_batches - mean ** 2) ** 0.5
     return mean, std
 
+# log parameters
 def start_log_project_parameters(p):
     (p[c.LOGFILE]).append(c.RANDOM_SEED_VALUE + ',' + str(p[c.RANDOM_SEED_VALUE]))
     (p[c.LOGFILE]).append(c.BATCH_SIZE + ',' + str(p[c.BATCH_SIZE]))
@@ -55,6 +59,7 @@ def start_log_project_parameters(p):
     (p[c.LOGFILE]).append(c.PIN_MEMORY + ',' + str(p[c.PIN_MEMORY]))
     (p[c.LOGFILE]).append(c.LOGFILE_NAME + ',' + str(p[c.LOGFILE_NAME]))
 
+# load an optimizer
 def optimizer_load(p, model_params, lr_update):
     if p[c.OPTIMIZER] == c.OPTIMIZER_ADAM:
         return optim.Adam(model_params, lr=lr_update, weight_decay=p[c.OPTIMIZER_WEIGHT_DECAY])
@@ -62,10 +67,12 @@ def optimizer_load(p, model_params, lr_update):
         return optim.AdamW(model_params, lr=lr_update, weight_decay=p[c.OPTIMIZER_WEIGHT_DECAY],betas=(0.95, 0.99))
         #return optim.Adam(model_params, lr=lr_update)
 
+# update the optimizer
 def optimizer_update_lr(p, optimizer, lr_update):
     for g in optimizer.param_groups:
         g['lr'] = lr_update
 
+# default criterion for vision models
 def criterion_load(p):
     if p[c.CRITERION] == c.CRITERION_CROSS_ENTROPY:
         return nn.CrossEntropyLoss()
@@ -89,6 +96,7 @@ def transfer_learning(model, num_outputs, layer_type_last_new = c.MODEL_OUTPUT_L
     print(type(model))
     return model
 
+# find the last layer in a model, used for replacing it with a new one with number of classifiers
 def model_last_layer(model):
     # find last layer
     #layernames = ([n for n, _ in model.named_modules()])
@@ -98,6 +106,7 @@ def model_last_layer(model):
     lastlayer = getattr(model, lastlayer_name)
     return lastlayer
 
+# create a new last layer
 def layer_last_create(layer_type_last_new, num_outputs, num_inputs, bias):
     if layer_type_last_new == c.MODEL_OUTPUT_LAYER_TYPE_LINEAR:
         layer = nn.Linear(num_inputs, num_outputs, bias)
@@ -107,6 +116,7 @@ def layer_last_create(layer_type_last_new, num_outputs, num_inputs, bias):
         return False
     return  layer
 
+# replaces the last layer
 def model_replace_last_layer3(model, num_outputs, layer_type_last_new = c.MODEL_OUTPUT_LAYER_TYPE_LINEAR, debug = False):
     model_type = torch_help_functions.model_type(model, debug)
 
@@ -129,7 +139,7 @@ def model_replace_last_layer3(model, num_outputs, layer_type_last_new = c.MODEL_
         print('type of the model ' + str(type(model)))
     return True
 
-
+# sets all layers to non trainable
 def transfer_learning_lr(model, lr):
     current_layer = 0
     for param in model.parameters():
@@ -137,6 +147,7 @@ def transfer_learning_lr(model, lr):
             param.requires_grad = False
 
 
+# create a new model with the correct number of outputs
 def model_create(model_type, model_nr, num_outputs = 10, pretrained = False, debug = False) :
     model_get = getattr(torchvision.models, model_type)
     model_complete = model_get(pretrained=pretrained)

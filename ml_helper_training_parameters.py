@@ -11,7 +11,6 @@ import torch.nn.functional as F
 
 from torch.utils.data import DataLoader
 import constants_ai_h as c
-from torch.utils.data import random_split
 
 
 
@@ -84,7 +83,6 @@ criterion = nn.CrossEntropyLoss()
 
 
 
-
 ######################              DATALOADERS              #######################
 
 def dataloaders(p, train_ds, validate_ds, test_ds = None) :  # p is parameters
@@ -110,10 +108,3 @@ def transform_normalize_imagenet():
 def transform_normalize_cifar10():
     transform_imagenet = torchvision.transforms.Normalize(mean=[0.4914, 0.4822, 0.4465], std=[0.247, 0.243, 0.261])
     return transform_imagenet
-
-
-######################              SPLIT                 #######################
-
-def ds_random_split(ds_train, val_size, train_size):
-    train_ds_new , val_ds_new = random_split(ds_train, [train_size, val_size])
-    return train_ds_new, val_ds_new
