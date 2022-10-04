@@ -5,6 +5,7 @@ from sklearn.metrics import confusion_matrix
 import seaborn as sn
 import pandas as pd
 import torch
+import matplotlib.patches as patches
 
 
 # images as numpyarrays
@@ -40,6 +41,7 @@ def show_image_grid(images, grid_size_x, grid_size_y = False, labels = False, gr
     plt.show()
 
 
+
 def un_normalize_image(image, show_image = False):
     new_image = image * 128
     new_image = new_image + 128
@@ -57,6 +59,29 @@ def un_normalize_images(images):
         un_normalized_image = un_normalize_image(image)
         un_normalized_images.append(un_normalized_image)
     return un_normalized_images
+
+
+def display_bounding_boxes(image, boxes, labels, confidences = 'None', path_save_to_disk = False, show = True):
+    fig, ax = plt.subplots()
+    ax.imshow(image)
+
+    colors = ['r', 'pink', 'yellow', 'g','orange','black', 'brown', 'gray', 'blue', 'white']
+    color_for_label = {}
+    unique_labels = list(set(labels))
+    for nr_label in range(len(unique_labels)):
+        color_for_label[unique_labels[nr_label]] = colors[nr_label]
+
+    for score, label, box in zip(confidences, labels, boxes):
+        rect = patches.Rectangle((box[0],box[1]), box[2]-box[0], box[3]-box[1], linewidth=1, edgecolor=color_for_label[label], facecolor='none', label=label)
+        ax.add_patch(rect)
+        print(label + ' ' + color_for_label[label])
+
+    if show:
+        plt.show()
+    if path_save_to_disk:
+        plt.savefig(path_save_to_disk)
+    return plt
+
 
 
 def plot_confusion_matrix(cm,
@@ -140,6 +165,7 @@ def confusion_matrix_(net, testloader, path_save):
     plt.figure(figsize=(12, 7))
     sn.heatmap(df_cm, annot=True)
     plt.savefig(path_save)
+
 
 def plot_list(lista, show = True, save_path = None, label = ''):
     plt.plot(lista, color='magenta', marker='o',mfc='pink' ) #plot the data

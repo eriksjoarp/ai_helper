@@ -1,4 +1,12 @@
 Assorted good knowledge
+-----------------------
+Remember to transform the test pictures the same way as the trained ones
 
+
+---
+from google.colab import files
+import pandas as pd
+result.to_csv('example_file.csv')
+!cp example_file.csv "/content/drive/My Drive/"
 
 

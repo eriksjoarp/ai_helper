@@ -1,6 +1,8 @@
 import os.path
 import sys
 import torchvision
+import torch
+from fastai.vision.data import ImageList
 
 from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
@@ -13,6 +15,7 @@ for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
 
 import constants_dataset as c_d
 import erik_functions_files
+import PIL
 
 def train_val_dataset(dataset, val_split=0.2):
     train_idx, val_idx = train_test_split(list(range(len(dataset))), test_size=val_split)
@@ -44,3 +47,31 @@ def label_to_id(path_labels):
         label2id[label] = i
         id2label[i] = label
     return label2id, id2label
+
+
+def openMultiChannelImage(fpArr):
+    '''
+    Open multiple images and return a single multi channel image
+    '''
+    mat = None
+    nChannels = len(fpArr)
+    for i, fp in enumerate(fpArr):
+        img = PIL.Image.open(fp)
+        chan = PIL.pil2tensor(img, dtype='float').div_(255)
+        if (mat is None):
+            mat = torch.zeros((nChannels, chan.shape[1], chan.shape[2]))
+        mat[i, :, :] = chan
+    return PIL.Image(mat)
+
+
+#class MultiChannelImageItemList(ImageItemList):
+class MultiChannelImageItemList(ImageList):
+    def open(self, fn):
+        return openMultiChannelImage(fn)
+
+
+
+
+
+
+

@@ -1,6 +1,8 @@
 import os
 import torch
 import constants_ai_h as c
+import matplotlib.pyplot as plt
+import math
 
 def learning_rate_change2(learning_rate_start, epoch_now, epochs_change , factor_change = 0.33, warmup_epoch_levels = 4, warmup_epochs_per_level = 3, warmpup_factor_change = 2, warmup_factor_lower_than_max_lr = 20, learning_rate_max_test = False):
     starting_epoche = epoch_now - warmup_epoch_levels * warmup_epochs_per_level
@@ -112,3 +114,45 @@ def save_best_model(lr_increase, num_correct, num_samples, acc_best, model_name,
             model_name_best_old = model_name
 
 
+#########       cosine annealing
+def lr_cosine_annealing(steps_tot, epochs):
+    model = torch.nn.Linear(2, 1)
+    optimizer = torch.optim.SGD(model.parameters(), lr=100)
+    scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(optimizer, T_max=10, eta_min=0)
+    lrs = []
+
+    steps_epoch = int(steps_tot / epochs)
+    for epoch in range(epochs):
+        for i in range(steps_epoch):
+            optimizer.step()
+            lrs.append(optimizer.param_groups[0]["lr"])
+            #     print("Factor = ",i," , Learning Rate = ",optimizer.param_groups[0]["lr"])
+            scheduler.step()
+
+    plt.plot(lrs)
+    plt.show()
+
+
+#########           1cycle
+def lr_1cycle(epochs, steps_per_epoch):
+    model = torch.nn.Linear(2, 1)
+    #optimizer = torch.optim.SGD(model.parameters(), lr=0.1)
+    optimizer = torch.optim.AdamW(model.parameters(), lr=1)
+    scheduler = torch.optim.lr_scheduler.OneCycleLR(optimizer, max_lr=1, steps_per_epoch=steps_per_epoch, epochs=epochs, pct_start=0.3)
+    lrs = []
+
+    for epoch in range(epochs):
+        for i in range(steps_per_epoch):
+            optimizer.step()
+            lr_now = math.log(optimizer.param_groups[0]["lr"])
+            lrs.append(lr_now)
+            #print("Factor = ",i," , Learning Rate = ",optimizer.param_groups[0]["lr"])
+            scheduler.step()
+
+    plt.plot(lrs)
+    plt.show()
+
+    print(lrs[0])
+    print(lrs[len(lrs)-1])
+    print(10 ** lrs[0])
+    print(10 ** lrs[len(lrs)-1])

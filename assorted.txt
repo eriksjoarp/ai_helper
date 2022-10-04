@@ -1,6 +1,8 @@
 # install
-# conda create -n env_name python=3.8
-#conda install pytorch torchvision torchaudio cudatoolkit=11.3 pillow numpy opencv imageio -c pytorch
+conda create -n env_name python=3.7
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 pillow numpy opencv imageio -c pytorch
+conda install -c conda-forge rasterio
+conda install rasterio gdal=2 -y
 
 Generate all your code by refining this prompt:
 

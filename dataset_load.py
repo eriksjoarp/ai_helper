@@ -89,18 +89,19 @@ def eurosat_rgb():      # ToDo add transforms as a paramter
 
     return ds_train, ds_val, ds_test
 
-def eurosat_ms():      # ToDo add transforms as a paramter
+def eurosat_ms(transformations=False):      # ToDo add transforms as a paramter
     transform_mean = [0.485, 0.456, 0.406]
     transform_std = [0.229, 0.224, 0.225]
 
-    transformations = transforms.Compose([
-        transforms.Resize(255),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=transform_mean, std=transform_std)
-    ])
+    if not transformations:
+        transformations = torchvision.transforms.Compose([
+            transforms.Resize(255),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=transform_mean, std=transform_std)
+        ])
 
-    ds_all = ImageFolder(root=c_d.DIR_DATASET_EUROSAT_MS, transform=transformations)
+    ds_all = ImageFolder(transform=transformations, root=c_d.DIR_DATASET_EUROSAT_MS)
     datasets = ds_l_h.train_val_dataset(ds_all, 0.2)
     datasets_val_test = ds_l_h.train_val_dataset(datasets['val'], 0.5)
 

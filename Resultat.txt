@@ -1,3 +1,5 @@
 Resultat körningar
 EuroSat RGB
-    tiny_v1_b64_lr_2e-4_ep5
+    tiny_v1_b64_lr_2e-4_ep5_acc98.77
+    tiny_v1_lr1e-4_acc94.44
+    tiny_v2_b64_lr1e-4_ep5_acc98.9

@@ -1,0 +1,21 @@
+X   Fix imports of helper modules
+X   Try learning rate schedulers and plot it, 1 cycle
+    Try Lr consinus annealing.
+
+    Run cifar10 with 1cycle from own simple script
+
+    Try object detection from hugging space
+    Try another schedular for swin former hugging space
+
+    Make catalogue save strucutre for run trials
+
+    ------------
+    Tests
+    swin to classify images, try
+    swin to object detection, try
+    swin train on local GPU, classify
+    swin train on local GPU, object detect
+
+
+
+

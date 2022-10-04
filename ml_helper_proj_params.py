@@ -14,7 +14,7 @@ def params():
     project_params_dict[c.LOGFILE] = []
 
     # model
-    project_params_dict[c.MODEL_NAME] = 'mobilenet_v3_large_224'
+    project_params_dict[c.MODEL_NAME] = 'mobilenet_v3_small_224'
 
     # training
     project_params_dict[c.BATCH_SIZE] = 500

@@ -8,20 +8,21 @@ BASE_DIR_PROJ = pathlib.Path(os.getcwd())
 BASE_DIR_GIT = BASE_DIR_PROJ.parent.absolute()
 
 # dataset directory
-DIR_BASE = r'C:\ai_experiments'
 DIR_BASE_AI = r'C:\ai'
+DIR_BASE_EXPERIMENTS = r'C:\ai_experiments'
 
+DIR_EXPERIMENTS_SWIN = os.path.join(DIR_BASE_EXPERIMENTS, 'swin')
 
 DIR_AI_HELPER = os.path.join(BASE_DIR_GIT, 'ai_helper')
 DIR_HELPER = os.path.join(BASE_DIR_GIT, 'helper')
 
 DIR_DATASETS = os.path.join(DIR_BASE_AI, 'datasets')
 DIR_DATASETS_LARGE = r'D:\ai\datasets'
-DIR_MODELS_SAVE = os.path.join(DIR_BASE, 'models_saved')
-DIR_LOGS = os.path.join(DIR_BASE, 'logs')
-DIR_RESULTS = os.path.join(DIR_BASE, 'results')
+DIR_MODELS_SAVE = os.path.join(DIR_BASE_EXPERIMENTS, 'models_saved')
+DIR_LOGS = os.path.join(DIR_BASE_EXPERIMENTS, 'logs')
+DIR_RESULTS = os.path.join(DIR_BASE_EXPERIMENTS, 'results')
 
-DIR_CONFIGS = os.path.join(DIR_BASE, 'configs')
+DIR_CONFIGS = os.path.join(DIR_BASE_EXPERIMENTS, 'configs')
 DIR_AUGMENT_CONFIGS = os.path.join(DIR_CONFIGS, 'augment_configs')
 DIR_CONFIGS_EXPERIMENTS_TO_RUN = os.path.join(DIR_CONFIGS, 'experiments_to_run')
 DIR_CONFIGS_DEFAULTS = os.path.join(DIR_CONFIGS, 'configs_default')

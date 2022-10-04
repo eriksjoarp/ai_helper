@@ -37,7 +37,6 @@ import constants_dataset
 import torchvision.transforms as transforms
 
 
-
 # turn off gradients during inference for memory effieciency
 def get_all_preds(network, dataloader):
     """function to return the number of correct predictions across data set"""
@@ -50,7 +49,8 @@ def get_all_preds(network, dataloader):
 
     return all_preds
 
-def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODEL_CACHE, dataset_path = False, show_grid = False, correct_labels = False , type_dataset = 'numpy'):
+
+def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODEL_CACHE, dataset_path = False, show_grid = False, correct_labels = False , type_dataset = 'numpy', path_label_classes=constants_dataset.FILE_LABELS_IMAGENET1K):
     transform_to_tensor = transforms.Compose([transforms.ToTensor()])
 
     DIR_MODEL_CACHE = constants_dataset.DIR_MODEL_CACHE
@@ -71,6 +71,8 @@ def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODE
         images = erik_functions_files.load_images_from_folder(images_path)
         images_nr = len(images)
 
+
+
     ### Prepare swin model
     feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
     model = SwinForImageClassification.from_pretrained(model_name, cache_dir=DIR_MODEL_CACHE)
@@ -78,7 +80,8 @@ def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODE
     # test_dl = DataLoader(dataset['test'], batch_size=32, shuffle=False, num_workers=0, pin_memory=True)
     #predictions = get_all_preds(model, test_dl)
 
-    label2id, id2label = dataset_load_helper.label_to_id(constants_dataset.FILE_LABELS_IMAGENET1K)
+
+    label2id, id2label = dataset_load_helper.label_to_id(path_label_classes)
     pred_labels = []
     pred_labels_name = []
 

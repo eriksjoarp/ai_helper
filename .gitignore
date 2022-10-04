@@ -1,7 +1,8 @@
 .idea/
-__pychache__/
+__pychache*
 test.py
 lr_test.py
 GOOD_KNOWLEDGE.txt
 Resultat.txt
 ToDo.txt
+test_helper.py
