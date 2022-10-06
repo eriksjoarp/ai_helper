@@ -2,20 +2,15 @@ import os.path
 import sys
 import torchvision
 import torch
-from fastai.vision.data import ImageList
+#from fastai.vision.all import *
+import PIL
 
 from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
 
-############################        IMPORT HELPER MODULES       ############################
-sys.path.append(os.getcwd() + '/..')
-import python_imports
-for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
-############################################################################################
+from . import constants_dataset as c_d
+from helper import erik_functions_files
 
-import constants_dataset as c_d
-import erik_functions_files
-import PIL
 
 def train_val_dataset(dataset, val_split=0.2):
     train_idx, val_idx = train_test_split(list(range(len(dataset))), test_size=val_split)
@@ -65,9 +60,9 @@ def openMultiChannelImage(fpArr):
 
 
 #class MultiChannelImageItemList(ImageItemList):
-class MultiChannelImageItemList(ImageList):
-    def open(self, fn):
-        return openMultiChannelImage(fn)
+#class MultiChannelImageItemList(ImageList):
+#    def open(self, fn):
+#        return openMultiChannelImage(fn)
 
 
 

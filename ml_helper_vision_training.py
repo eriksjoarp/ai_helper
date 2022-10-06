@@ -4,7 +4,7 @@ import torch.optim as optim
 import ml_helper_training
 from ..helper import erik_functions_files
 
-import constants_ai_h as c
+from . import constants_ai_h as c
 import os
 import torch_help_functions
 import torch_help

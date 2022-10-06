@@ -1,24 +1,20 @@
-#!/usr/bin/env python3
 import sys, os
 import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
 import torchvision
 import datasets     # huggingface
 
-import constants_dataset as c_d
-import constants_ai_h as c
-import dataset_load_helper as ds_l_h
+from . import constants_dataset as c_d
+from . import constants_ai_h as c
+from . import dataset_load_helper as ds_l_h
+from . import pandas_helper
+from . import torch_help_functions
 
-############################        IMPORT HELPER MODULES       ############################
-sys.path.append(os.getcwd() + '/..')
-import python_imports
-for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
-############################################################################################
+from helper import helpers as h
+from helper import erik_functions_remote
+from helper import erik_functions_files
+from helper import constants_helper
 
-import helpers as h
-import constants_helper
-import pandas_helper
-import torch_help_functions
 
 
 # load one or all datasets from ctu13, None loads all rows
@@ -112,6 +108,14 @@ def eurosat_ms(transformations=False):      # ToDo add transforms as a paramter
     return ds_train, ds_val, ds_test
 
 
+#   download weights to local to use in realesr and gfpgans
+def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save = c_d.DIR_MODEL_WEIGHTS_GFPGAN):
+    is_successful = True
+    erik_functions_files.make_dir(path_save)
+    for url in urls:
+        success = erik_functions_remote.wget_download(url, path_save)
+        if not success: is_successful = False
+    return is_successful
 
 
 

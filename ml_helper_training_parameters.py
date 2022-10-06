@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from torch.utils.data import DataLoader
-import constants_ai_h as c
+from . import constants_ai_h as c
 
 
 

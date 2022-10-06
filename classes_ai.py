@@ -3,9 +3,6 @@ import torch
 import sys
 import os
 
-#import constants as c
-
-
 class Experiment():
     def __init__(self, config_name):
         self.start_time = time.time()

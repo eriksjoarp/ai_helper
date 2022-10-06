@@ -1,7 +1,8 @@
 import torch
 import torchvision
-import constants_ai_h as c
 from torch.utils.data import random_split
+
+from . import constants_ai_h as c_ai_h
 
 # checks the GPU and running versions
 def is_cuda_available():
@@ -70,22 +71,22 @@ def torchvision_image_models():
 #
 def model_type(model, debug = False):
     model_type = str(type(model))
-    for model_name in c.MODEL_TORCHVISION_FC_TYPES:
+    for model_name in c_ai_h.MODEL_TORCHVISION_FC_TYPES:
         if model_name in model_type:
-            return c.MODEL_IS_FC_TYPE
-    for model_name in c.MODEL_TORCHVISION_CLASSIFIER_TYPES:
+            return c_ai_h.MODEL_IS_FC_TYPE
+    for model_name in c_ai_h.MODEL_TORCHVISION_CLASSIFIER_TYPES:
         if model_name in model_type:
-            return c.MODEL_IS_CLASSIFIER_TYPE
-    for model_name in c.MODEL_TORCHVISION_CLASSIFIER_DEEP_TYPES:
+            return c_ai_h.MODEL_IS_CLASSIFIER_TYPE
+    for model_name in c_ai_h.MODEL_TORCHVISION_CLASSIFIER_DEEP_TYPES:
         if model_name in model_type:
-            return c.MODEL_IS_CLASSIFIER_DEEP_TYPE
+            return c_ai_h.MODEL_IS_CLASSIFIER_DEEP_TYPE
     if debug: print('could not match ' + model_type + ' to a specific type')
-    return c.MODEL_TYPE_UNKNOWN
+    return c_ai_h.MODEL_TYPE_UNKNOWN
 
 # a list of all torchvision models
 def torchvision_image_models2():
     models_all = []
-    for model_list in c.MODELS_TORCHVISION:
+    for model_list in c_ai_h.MODELS_TORCHVISION:
         for model_item in model_list:
             models_all.append(model_item.lower())
     return models_all
@@ -125,6 +126,10 @@ def label2id(dataset):
         id2label[i] = label
     return label2id, id2label
 
+
+def check_ai_versions():
+    print('torch.__version__:' + torch.__version__)
+    print('torchvision.__version__:' + torchvision.__version__)
 
 
 

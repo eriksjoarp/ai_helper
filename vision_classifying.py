@@ -8,17 +8,9 @@
 # conda install -c intel scikit-learn -y
 # conda install -c anaconda seaborn -y
 
-import sys
 import os
 
-############################        IMPORT HELPER MODULES       ############################
-sys.path.append(os.getcwd() + '/..')
-import python_imports
-for path in python_imports.dirs_to_import(): sys.path.insert(1, path)
-############################################################################################
-
 from transformers import AutoFeatureExtractor, SwinForImageClassification
-import torchvision
 
 from datasets import load_dataset
 from torch.utils.data import DataLoader

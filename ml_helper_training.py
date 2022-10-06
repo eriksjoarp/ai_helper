@@ -1,8 +1,9 @@
 import os
 import torch
-import constants_ai_h as c
+from . import constants_ai_h as c
 import matplotlib.pyplot as plt
 import math
+
 
 def learning_rate_change2(learning_rate_start, epoch_now, epochs_change , factor_change = 0.33, warmup_epoch_levels = 4, warmup_epochs_per_level = 3, warmpup_factor_change = 2, warmup_factor_lower_than_max_lr = 20, learning_rate_max_test = False):
     starting_epoche = epoch_now - warmup_epoch_levels * warmup_epochs_per_level

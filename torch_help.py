@@ -1,5 +1,4 @@
 import torch
-import torchsummary
 import torchvision
 
 import ml_helper
