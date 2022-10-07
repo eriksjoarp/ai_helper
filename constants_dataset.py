@@ -1,5 +1,5 @@
-import os, sys
-from . import constants_ai_h as c_ai_h
+import os
+import constants_ai_h as c_ai_h
 
 from os.path import join as j
 
@@ -8,7 +8,6 @@ from os.path import join as j
 BASE_DIR_GIT = c_ai_h.BASE_DIR_GIT
 BASE_DIR_MODEL_WEIGHTS = j(c_ai_h.BASE_DIR_AI, 'model_weights')
 BASE_DIR_DATASET = j(c_ai_h.BASE_DIR_AI, 'datasets')
-
 
 DIR_DATASET_CTU13 = j(BASE_DIR_DATASET, r'ctu13\CTU-13-Dataset')
 DIR_DATASET_BASE_EUROSAT =  j(BASE_DIR_DATASET, 'eurosat')
@@ -25,13 +24,9 @@ DIR_MODEL_CACHE = j(BASE_DIR_GIT, 'model_cache')
 FILE_LABELS_IMAGENET1K = j(DIR_LABELS, 'imagenet1k.txt')
 FILE_LABELS_IMAGENET22K = j(DIR_LABELS, 'imagenet22k.txt')
 
-print(DIR_DATASET_IMDB)
-
-
 #######################             model weights
 
 DIR_MODEL_WEIGHTS_GAN = j(BASE_DIR_MODEL_WEIGHTS, 'gan')
-
 DIR_MODEL_WEIGHTS_GFPGAN = j(DIR_MODEL_WEIGHTS_GAN, 'gfp_gan')
 
 
@@ -48,7 +43,6 @@ URLS_WEIGHTS_GFP_GAN = [
     r'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/RestoreFormer.pth',
     r'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/CodeFormer.pth'
 ]
-
 
 
 
