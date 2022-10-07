@@ -109,14 +109,17 @@ def eurosat_ms(transformations=False):      # ToDo add transforms as a paramter
 
 
 #   download weights to local to use in realesr and gfpgans
-def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save = c_d.DIR_MODEL_WEIGHTS_GFPGAN):
+def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save=c_d.DIR_MODEL_WEIGHTS_GFPGAN):
     is_successful = True
     erik_functions_files.make_dir(path_save)
     for url in urls:
-        success = erik_functions_remote.wget_download(url, path_save)
-        if not success: is_successful = False
+        basename = os.path.basename(url)
+        path_file = os.path.join(path_save, basename)
+        if not(erik_functions_files.file_exists(path_file, supress_not_found=False)):
+            print('Downloading ' + url)
+            success = erik_functions_remote.wget_download(url, path_save)
+            if not success: is_successful = False
     return is_successful
-
 
 
 
