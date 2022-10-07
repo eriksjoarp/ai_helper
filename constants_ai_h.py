@@ -1,27 +1,25 @@
 import pathlib
 import os
 
-
 BASE_DIR_AI = r'C:\ai'
 BASE_DIR_PROJ = pathlib.Path(os.getcwd())
 BASE_DIR_GIT = BASE_DIR_PROJ.parent.absolute()
+BASE_DIR_EXPERIMENTS = r'C:\ai_experiments'
+BASE_DIR_RESULTS = os.path.join(BASE_DIR_AI, 'results')
 
 # dataset directory
-DIR_BASE_AI = r'C:\ai'
-DIR_BASE_EXPERIMENTS = r'C:\ai_experiments'
-
-DIR_EXPERIMENTS_SWIN = os.path.join(DIR_BASE_EXPERIMENTS, 'swin')
+DIR_EXPERIMENTS_SWIN = os.path.join(BASE_DIR_EXPERIMENTS, 'swin')
 
 DIR_AI_HELPER = os.path.join(BASE_DIR_GIT, 'ai_helper')
 DIR_HELPER = os.path.join(BASE_DIR_GIT, 'helper')
 
-DIR_DATASETS = os.path.join(DIR_BASE_AI, 'datasets')
-DIR_DATASETS_LARGE = r'D:\ai\datasets'
-DIR_MODELS_SAVE = os.path.join(DIR_BASE_EXPERIMENTS, 'models_saved')
-DIR_LOGS = os.path.join(DIR_BASE_EXPERIMENTS, 'logs')
-DIR_RESULTS = os.path.join(DIR_BASE_EXPERIMENTS, 'results')
+DIR_DATASETS = os.path.join(BASE_DIR_AI, 'datasets')
+DIR_DATASETS_LARGE = r'D:\ai\datasets'  #ToDo on another drive
+DIR_MODELS_SAVE = os.path.join(BASE_DIR_EXPERIMENTS, 'models_saved')
+DIR_LOGS = os.path.join(BASE_DIR_EXPERIMENTS, 'logs')
+DIR_RESULTS = os.path.join(BASE_DIR_EXPERIMENTS, 'results')
 
-DIR_CONFIGS = os.path.join(DIR_BASE_EXPERIMENTS, 'configs')
+DIR_CONFIGS = os.path.join(BASE_DIR_EXPERIMENTS, 'configs')
 DIR_AUGMENT_CONFIGS = os.path.join(DIR_CONFIGS, 'augment_configs')
 DIR_CONFIGS_EXPERIMENTS_TO_RUN = os.path.join(DIR_CONFIGS, 'experiments_to_run')
 DIR_CONFIGS_DEFAULTS = os.path.join(DIR_CONFIGS, 'configs_default')
@@ -161,6 +159,22 @@ MODELS_TORCHVISION = [
     MODEL_TORCHVISION_CLASSIFIER_TYPES,
     MODEL_TORCHVISION_CLASSIFIER_DEEP_TYPES
 ]
+
+############################################                PROJECTS            #########################################
+DIR_PROJECT_SR3 = os.path.join(BASE_DIR_GIT, 'sr3')
+PROJ_SR3_ARG_SIZE_16_64 = r'''--size 16,128'''
+PROJ_SR3_ARG_SIZE_64_512 = r'''--size 64,512'''
+
+############################################                CONFIGS             #########################################
+DIR_CONFIGS_SR3_BASE = os.path.join(DIR_PROJECT_SR3, 'config')
+DIR_RESULTS_SR3 = os.path.join(BASE_DIR_RESULTS, 'sr3')
+DIR_CONFIGS_SR3 = os.path.join(DIR_RESULTS_SR3, 'configs')
+
+CONFIG_SR_SR3_16_128_JSON = os.path.join(DIR_CONFIGS_SR3_BASE, 'sr_sr3_16_128.json')
+CONFIG_SR_SR3_64_512_JSON = os.path.join(DIR_CONFIGS_SR3_BASE, 'sr_sr3_64_512.json')
+CONFIG_SR_DDPM_16_128_JSON = os.path.join(DIR_CONFIGS_SR3_BASE, 'sr_ddpm_16_128.json')
+CONFIG_SAMPLE_SR3_128_JSON = os.path.join(DIR_CONFIGS_SR3_BASE, 'sample_sr3_128.json')
+CONFIG_SAMPLE_DDPM_128_JSON = os.path.join(DIR_CONFIGS_SR3_BASE, 'sample_ddpm_128.json')
 
 
 # others
