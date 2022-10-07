@@ -7,7 +7,7 @@ pip3 install -r requirements
 
 # conda -n create env_name python=3.8
 # conda activate env_name
-# conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch
+# conda install pytorch=1.12.1 torchvision torchaudio cudatoolkit=11.3 -c pytorch
 # pip install pandas matplotlib
 # conda install -c conda-forge opencv
 # conda install -c anaconda pillow
