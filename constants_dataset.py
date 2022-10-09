@@ -25,6 +25,7 @@ DIR_MODEL_CACHE = j(BASE_DIR_GIT, 'model_cache')
 
 FILE_LABELS_IMAGENET1K = j(DIR_LABELS, 'imagenet1k.txt')
 FILE_LABELS_IMAGENET22K = j(DIR_LABELS, 'imagenet22k.txt')
+FILE_LABELS_EUROSAT = j(DIR_LABELS, 'eurosat.txt')
 
 #######################             model weights
 
