@@ -8,7 +8,6 @@ import PIL
 from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
 
-from . import constants_dataset as c_d
 from helper import erik_functions_files
 
 

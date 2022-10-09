@@ -1,6 +1,6 @@
 import random
 import time
-from . import constants_ai_h as c
+from ai_helper import constants_ai_h as c
 
 def params():
     project_params_dict = {}

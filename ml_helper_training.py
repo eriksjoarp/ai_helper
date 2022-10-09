@@ -1,6 +1,6 @@
 import os
 import torch
-from . import constants_ai_h as c
+from ai_helper import constants_ai_h as c
 import matplotlib.pyplot as plt
 import math
 

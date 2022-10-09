@@ -2,7 +2,7 @@ import torch
 import torchvision
 from torch.utils.data import random_split
 
-from . import constants_ai_h as c_ai_h
+from ai_helper import constants_ai_h as c_ai_h
 
 # checks the GPU and running versions
 def is_cuda_available():

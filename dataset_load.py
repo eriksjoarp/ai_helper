@@ -4,11 +4,11 @@ from torchvision.datasets import ImageFolder
 import torchvision
 import datasets     # huggingface
 
-from . import constants_dataset as c_d
-from . import constants_ai_h as c
-from . import dataset_load_helper as ds_l_h
-from . import pandas_helper
-from . import torch_help_functions
+from ai_helper import constants_dataset as c_d
+from ai_helper import constants_ai_h as c
+from ai_helper import dataset_load_helper as ds_l_h
+from ai_helper import pandas_helper
+from ai_helper import torch_help_functions
 
 from helper import helpers as h
 from helper import erik_functions_remote

@@ -16,17 +16,13 @@ from datasets import load_dataset
 from torch.utils.data import DataLoader
 from torchvision.datasets import ImageFolder
 import torch
-
-import constants_dataset
-import ml_helper_training
-
-import ml_helper_proj_params
-import constants_ai_h as c
-import erik_functions_files
-import ml_helper_visualization
-import dataset_load_helper
-import constants_dataset
 import torchvision.transforms as transforms
+
+from helper import erik_functions_files
+from ai_helper import ml_helper_visualization
+from ai_helper import dataset_load_helper
+from ai_helper import constants_dataset
+
 
 
 # turn off gradients during inference for memory effieciency
