@@ -1,5 +1,5 @@
 import os
-import constants_ai_h as c_ai_h
+from ai_helper import constants_ai_h as c_ai_h
 
 from os.path import join as j
 
@@ -8,6 +8,7 @@ from os.path import join as j
 BASE_DIR_GIT = c_ai_h.BASE_DIR_GIT
 BASE_DIR_MODEL_WEIGHTS = j(c_ai_h.BASE_DIR_AI, 'model_weights')
 BASE_DIR_DATASET = j(c_ai_h.BASE_DIR_AI, 'datasets')
+BASE_DIR_SR3 = os.path.join(BASE_DIR_DATASET, 'sr3')
 
 DIR_DATASET_CTU13 = j(BASE_DIR_DATASET, r'ctu13\CTU-13-Dataset')
 DIR_DATASET_BASE_EUROSAT =  j(BASE_DIR_DATASET, 'eurosat')
@@ -18,6 +19,7 @@ DIR_DATASET_EUROSAT_MS = j(DIR_DATASET_BASE_EUROSAT, 'EuroSATallBAnds', '2750')
 DIR_DATASET_HUGGINGFACE = j(BASE_DIR_DATASET, 'huggingface')
 DIR_LABELS = j(BASE_DIR_DATASET, 'labels_mapping')
 DIR_DATASET_IMDB = j(DIR_DATASET_HUGGINGFACE, 'imdb')
+
 
 DIR_MODEL_CACHE = j(BASE_DIR_GIT, 'model_cache')
 
@@ -53,3 +55,11 @@ ROWS_ALL = 'ROWS_ALL'
 
 CONCATENATE_TRUE = 'True'
 CONCATENATE_FALSE = 'False'
+
+
+#########################################           SR3             ##########################################
+DIR_DATASET_SR3_ERIK = j(BASE_DIR_SR3, 'erik')
+DIR_DATASET_SR3_ERIK_PREPARED = j(BASE_DIR_SR3, 'erik_prepared')
+DIR_DATASET_SR3_EUROSAT = j(BASE_DIR_SR3, 'eurosat')
+DIR_DATASET_SR3_EUROSAT_PREPARED = j(BASE_DIR_SR3, 'eurosat_prepared')
+
