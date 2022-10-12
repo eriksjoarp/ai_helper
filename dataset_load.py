@@ -62,18 +62,19 @@ def Cifar10(p, transform_train, transform_val, tranform_test = None):
     return train_ds, val_ds, test_ds
 
 
-def eurosat_rgb():      # ToDo add transforms as a paramter
+def eurosat_rgb(transformations=None):      # ToDo add transforms as a paramter
     print('Loading dataset : EuroSat RGB ')
 
     transform_mean = [0.485, 0.456, 0.406]
     transform_std = [0.229, 0.224, 0.225]
 
-    transformations = transforms.Compose([
-        transforms.Resize(255),
-        transforms.CenterCrop(224),
-        transforms.ToTensor(),
-        transforms.Normalize(mean=transform_mean, std=transform_std)
-    ])
+    if transformations == None:
+        transformations = transforms.Compose([
+            transforms.Resize(255),
+            transforms.CenterCrop(224),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=transform_mean, std=transform_std)
+        ])
 
     ds_all = ImageFolder(root=c_d.DIR_DATASET_EUROSAT_RGB, transform=transformations)
     datasets = ds_l_h.train_val_dataset(ds_all, 0.2)
@@ -120,6 +121,7 @@ def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save=c_d.DI
             success = erik_functions_remote.wget_download(url, path_save)
             if not success: is_successful = False
     return is_successful
+
 
 
 
