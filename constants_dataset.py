@@ -12,6 +12,7 @@ BASE_DIR_SR3 = os.path.join(BASE_DIR_DATASET, 'sr3')
 
 DIR_DATASET_CTU13 = j(BASE_DIR_DATASET, r'ctu13\CTU-13-Dataset')
 DIR_DATASET_BASE_EUROSAT =  j(BASE_DIR_DATASET, 'eurosat')
+DIR_MODELS_SAVED = j(c_ai_h.BASE_DIR_AI, 'models_saved')
 
 DIR_DATASET_EUROSAT_RGB = j(DIR_DATASET_BASE_EUROSAT, 'EuroSAT', '2750')
 DIR_DATASET_EUROSAT_MS = j(DIR_DATASET_BASE_EUROSAT, 'EuroSATallBAnds', '2750')
@@ -46,6 +47,12 @@ URLS_WEIGHTS_GFP_GAN = [
     r'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/RestoreFormer.pth',
     r'https://github.com/TencentARC/GFPGAN/releases/download/v1.3.4/CodeFormer.pth'
 ]
+
+
+#######################             models saved
+
+DIR_MODELS_SAVED_SWIN = j(DIR_MODELS_SAVED, 'swin')
+
 
 
 
