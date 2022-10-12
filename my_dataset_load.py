@@ -15,6 +15,46 @@ from helper import erik_functions_remote
 from helper import erik_functions_files
 from helper import constants_helper
 
+import pandas as pd
+from torchvision.io import read_image
+from torch.utils.data import Dataset
+
+from torchvision.transforms import (
+    CenterCrop,
+    Compose,
+    Normalize,
+    RandomHorizontalFlip,
+    RandomResizedCrop,
+    RandAugment,
+    Resize,
+    ToTensor,
+)
+
+
+
+
+class CustomImageDatasetEurosat(Dataset):
+    def __init__(self, transform=None, target_transform=None):
+        self.img_labels = pd.read_csv(c_d.FILE_LABELS_EUROSAT)
+        self.img_dir = c_d.DIR_DATASET_EUROSAT_RGB
+        self.transform = transform
+        self.target_transform = target_transform
+
+
+    def __len__(self):
+        return len(self.img_labels)
+
+    def __getitem__(self, idx):
+        img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
+        image = read_image(img_path)
+        label = self.img_labels.iloc[idx, 1]
+        if self.transform:
+            image = self.transform(image)
+        if self.target_transform:
+            label = self.target_transform(label)
+        return image, label
+
+
 
 
 # load one or all datasets from ctu13, None loads all rows
