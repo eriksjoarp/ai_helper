@@ -10,7 +10,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from torch.utils.data import DataLoader
-from ai_helper import constants_ai_h as c
+from ai_helper import constants_ai_h as c_ai_h
 
 
 
@@ -42,6 +42,16 @@ def dataset_transforms(p):
 
     print(str(transform_train))
     return transform_train, transform_val, transform_test
+
+def transform_swin():
+    val_transforms = Compose(
+        [
+            Resize(feature_extractor.size),
+            CenterCrop(feature_extractor.size),
+            ToTensor(),
+            normalize,
+        ]
+    )
 
 '''
 transform_train = transforms.Compose([ #transforms.ToPILImage(),
