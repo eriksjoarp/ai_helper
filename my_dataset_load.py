@@ -15,6 +15,46 @@ from helper import erik_functions_remote
 from helper import erik_functions_files
 from helper import constants_helper
 
+import pandas as pd
+from torchvision.io import read_image
+from torch.utils.data import Dataset
+
+from torchvision.transforms import (
+    CenterCrop,
+    Compose,
+    Normalize,
+    RandomHorizontalFlip,
+    RandomResizedCrop,
+    RandAugment,
+    Resize,
+    ToTensor,
+)
+
+
+
+
+class CustomImageDatasetEurosat(Dataset):
+    def __init__(self, transform=None, target_transform=None):
+        self.img_labels = pd.read_csv(c_d.FILE_LABELS_EUROSAT)
+        self.img_dir = c_d.DIR_DATASET_EUROSAT_RGB
+        self.transform = transform
+        self.target_transform = target_transform
+
+
+    def __len__(self):
+        return len(self.img_labels)
+
+    def __getitem__(self, idx):
+        img_path = os.path.join(self.img_dir, self.img_labels.iloc[idx, 0])
+        image = read_image(img_path)
+        label = self.img_labels.iloc[idx, 1]
+        if self.transform:
+            image = self.transform(image)
+        if self.target_transform:
+            label = self.target_transform(label)
+        return image, label
+
+
 
 
 # load one or all datasets from ctu13, None loads all rows
@@ -62,19 +102,18 @@ def Cifar10(p, transform_train, transform_val, tranform_test = None):
     return train_ds, val_ds, test_ds
 
 
-def eurosat_rgb(transformations=None):      # ToDo add transforms as a paramter
+def eurosat_rgb():      # ToDo add transforms as a paramter
     print('Loading dataset : EuroSat RGB ')
 
     transform_mean = [0.485, 0.456, 0.406]
     transform_std = [0.229, 0.224, 0.225]
 
-    if transformations == None:
-        transformations = transforms.Compose([
-            transforms.Resize(255),
-            transforms.CenterCrop(224),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=transform_mean, std=transform_std)
-        ])
+    transformations = transforms.Compose([
+        transforms.Resize(255),
+        transforms.CenterCrop(224),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=transform_mean, std=transform_std)
+    ])
 
     ds_all = ImageFolder(root=c_d.DIR_DATASET_EUROSAT_RGB, transform=transformations)
     datasets = ds_l_h.train_val_dataset(ds_all, 0.2)
@@ -121,7 +160,6 @@ def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save=c_d.DI
             success = erik_functions_remote.wget_download(url, path_save)
             if not success: is_successful = False
     return is_successful
-
 
 
 

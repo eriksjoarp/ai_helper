@@ -1,12 +1,15 @@
-# conda activate swin
-# conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y
-# conda install -c conda-forge opencv -y
-# conda install -c huggingface transformers -y
-# conda install -c conda-forge huggingface_hub -y
-# conda install -c huggingface -c conda-forge datasets -y
-# conda install -c conda-forge pytorch-model-summary -y
-# conda install -c intel scikit-learn -y
-# conda install -c anaconda seaborn -y
+'''
+conda activate swin2
+conda install pytorch torchvision torchaudio cudatoolkit=11.3 -c pytorch -y
+conda install -c conda-forge opencv -y
+conda install -c huggingface transformers -y
+conda install -c conda-forge huggingface_hub -y
+conda install -c huggingface -c conda-forge datasets -y
+conda install -c conda-forge pytorch-model-summary -y
+conda install -c intel scikit-learn -y
+conda install -c anaconda seaborn -y
+
+'''
 
 import os
 
@@ -38,7 +41,7 @@ def get_all_preds(network, dataloader):
     return all_preds
 
 
-def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODEL_CACHE, dataset_path = False, show_grid = False, correct_labels = False , type_dataset = 'numpy', path_label_classes=constants_dataset.FILE_LABELS_IMAGENET1K):
+def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODEL_CACHE, dataset_path=False, show_grid=False, correct_labels=False , type_dataset = 'numpy', path_label_classes=constants_dataset.FILE_LABELS_IMAGENET1K):
     transform_to_tensor = transforms.Compose([transforms.ToTensor()])
 
     DIR_MODEL_CACHE = constants_dataset.DIR_MODEL_CACHE
@@ -51,25 +54,21 @@ def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODE
 
     # type of dataset ToDo: handle different types
 
-    #### Test load images
-
-    ### Load images
+    # load images and save the path to the images
     if dataset_path:
         images_path = dataset_path
-        images = erik_functions_files.load_images_from_folder(images_path)
+        images, path_images_loaded = erik_functions_files.load_images_from_folder(images_path)
         images_nr = len(images)
 
-
-
-    ### Prepare swin model
+    # prepare swin model
     feature_extractor = AutoFeatureExtractor.from_pretrained(model_name)
     model = SwinForImageClassification.from_pretrained(model_name, cache_dir=DIR_MODEL_CACHE)
 
     # test_dl = DataLoader(dataset['test'], batch_size=32, shuffle=False, num_workers=0, pin_memory=True)
-    #predictions = get_all_preds(model, test_dl)
-
+    # predictions = get_all_preds(model, test_dl)
 
     label2id, id2label = dataset_load_helper.label_to_id(path_label_classes)
+
     pred_labels = []
     pred_labels_name = []
 
@@ -93,7 +92,7 @@ def classify_swin(p, dataset, model_name, cache_dir = constants_dataset.DIR_MODE
     if show_grid:
         ml_helper_visualization.show_image_grid(images, 4, permutate=False, labels=pred_labels_name)
 
-    return pred_labels, pred_labels_name
+    return pred_labels, pred_labels_name, path_images_loaded
 
 
 
