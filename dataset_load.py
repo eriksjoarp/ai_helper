@@ -124,6 +124,11 @@ def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save=c_d.DI
 
 
 
+# ToDo save a preprocessed dataset to disk in a good load format
+def dataset_save_to_disk(dataset, path_save, format_save):
+    pass
+
+
 
 if __name__ == "__main__":
     ctu13_1 = dataset_load_ctu13(1)
