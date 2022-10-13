@@ -9,6 +9,7 @@ from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
 
 from helper import erik_functions_files
+from helper import erik_functions_help_files_high
 
 
 def train_val_dataset(dataset, val_split=0.2):
@@ -57,12 +58,26 @@ def openMultiChannelImage(fpArr):
         mat[i, :, :] = chan
     return PIL.Image(mat)
 
+#def dirs_truncate_to_out_dir(dir_from, dir_to, nr_files_per_dir = 100, randomize_files = True, dir_to_remove=True):
 
-#class MultiChannelImageItemList(ImageItemList):
-#class MultiChannelImageItemList(ImageList):
-#    def open(self, fn):
-#        return openMultiChannelImage(fn)
+def dataset_create_small(dir_dataset_files, nr_files_per_dir=1000, randomize_files=True, remove_old_dir_to=True, dir_extension='_small'):
+    dir_parent = erik_functions_files.dir_parent(dir_dataset_files)
+    dir_base = os.path.basename(dir_dataset_files)
+    dir_dataset_files_out = os.path.join(dir_parent, dir_base + dir_extension)
 
+    print(dir_dataset_files_out)
+
+
+
+
+
+
+
+# test
+if __name__=='__main__':
+    dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2700_32'
+
+    dataset_create_small(dir_dataset, nr_files_per_dir=10, randomize_files=True, remove_old_dir_to=True)
 
 
 
