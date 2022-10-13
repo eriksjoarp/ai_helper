@@ -65,19 +65,18 @@ def dataset_create_small(dir_dataset_files, nr_files_per_dir=1000, randomize_fil
     dir_base = os.path.basename(dir_dataset_files)
     dir_dataset_files_out = os.path.join(dir_parent, dir_base + dir_extension)
 
-    print(dir_dataset_files_out)
-
-
-
+    #def dirs_truncate_to_out_dir(dir_from, dir_to, nr_files_per_dir = 100, randomize_files = True, remove_old_dir_to=True):
+    erik_functions_help_files_high.dirs_truncate_to_out_dir(dir_dataset_files, dir_dataset_files_out, nr_files_per_dir=nr_files_per_dir,
+                                                            randomize_files=randomize_files, remove_old_dir_to=remove_old_dir_to)
 
 
 
 
 # test
 if __name__=='__main__':
-    dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2700_32'
-
-    dataset_create_small(dir_dataset, nr_files_per_dir=10, randomize_files=True, remove_old_dir_to=True)
+    pass
+    #dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_16'
+    #dataset_create_small(dir_dataset, nr_files_per_dir=1000, randomize_files=True, remove_old_dir_to=True)
 
 
 
