@@ -23,8 +23,8 @@ DIR_DATASET_HUGGINGFACE = j(BASE_DIR_DATASET, 'huggingface')
 DIR_LABELS = j(BASE_DIR_DATASET, 'labels_mapping')
 DIR_DATASET_IMDB = j(DIR_DATASET_HUGGINGFACE, 'imdb')
 
-
 DIR_MODEL_CACHE = j(BASE_DIR_GIT, 'model_cache')
+DIR_DATASET_CACHE = j(BASE_DIR_DATASET, 'dataset_cache')
 
 FILE_LABELS_IMAGENET1K = j(DIR_LABELS, 'imagenet1k.txt')
 FILE_LABELS_IMAGENET22K = j(DIR_LABELS, 'imagenet22k.txt')
@@ -65,6 +65,14 @@ ROWS_ALL = 'ROWS_ALL'
 
 CONCATENATE_TRUE = 'True'
 CONCATENATE_FALSE = 'False'
+
+DATASET_SMALL = '_small'
+DATASET_SPLIT = '_split'
+
+DATASET_TRAIN = 'train'
+DATASET_VAL = 'val'
+DATASET_TEST = 'test'
+
 
 
 #########################################           SR3             ##########################################
