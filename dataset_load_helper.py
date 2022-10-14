@@ -79,6 +79,7 @@ def dataset_create_small(dir_dataset_files, nr_files_per_dir=1000, randomize_fil
     erik_functions_help_files_high.dirs_truncate_to_out_dir(dir_dataset_files, dir_dataset_files_out, nr_files_per_dir=nr_files_per_dir,
                                                             randomize_files=randomize_files, remove_old_dir_to=remove_old_dir_to)
 
+
 # split a list into train, val, test portions
 def dataset_split(paths, val_split=0.1, test_split=0.1):
     nr_total = len(paths)
@@ -135,20 +136,33 @@ def dataset_dirs_split(dataset_path, split=c_d.DATASET_SPLIT):
 
 def dataset_dirs_from_base(dataset_dir_base, dir_split=c_d.DATASET_SPLIT, dir_small=c_d.DATASET_SMALL, small=False):
     if small:
-        dir_train, dir_val, dir_test = dataset_dirs_split(dataset_dir_base, dir_split + dir_small)
+        dir_train, dir_val, dir_test = dataset_dirs_split(dataset_dir_base, dir_small + dir_split)
     else:
         dir_train, dir_val, dir_test = dataset_dirs_split(dataset_dir_base, dir_split)
     return dir_train, dir_val, dir_test
 
 
+def flatten_dirs_to_list(dataset_dir):
+    sub_dirs = erik_functions_files.dirs_in_dir(dataset_dir, full_path=True)
+    paths = []
+
+    for sub_dir in sub_dirs:
+        files = erik_functions_files.files_in_dir_full_path(sub_dir)
+        for file_unique in files:
+            paths.append(file_unique)
+    random.shuffle(paths)
+    random.shuffle(paths)
+    return paths
 
 
 if __name__=='__main__':
-    dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_32'
-    dir_dataset, _ = dataset_directory_small(dir_dataset)
+    dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_small'
 
-    print(dir_dataset)
-    dataset_create_train_test_val(dir_dataset)
+    res = flatten_dirs_to_list(dir_dataset)
+
+    pass
+
+    #dataset_create_train_test_val(dir_dataset)
 
     #dataset_create_small(dir_dataset, nr_files_per_dir=1000, randomize_files=True, remove_old_dir_to=True)
     #dataset_create_train_test_val(dir_dataset)
