@@ -9,7 +9,7 @@ import PIL
 from torch.utils.data import Subset
 from sklearn.model_selection import train_test_split
 
-from helper import erik_functions_files
+from helper import erik_functions_files as e_f
 from helper import erik_functions_help_files_high
 from ai_helper import constants_dataset as c_d
 
@@ -35,7 +35,7 @@ def label_to_id(path_labels):
     filename = os.path.basename(path_labels)
     directory = os.path.dirname(path_labels)
 
-    labels = erik_functions_files.get_filelines_to_list(directory, filename)
+    labels = e_f.get_filelines_to_list(directory, filename)
 
     # create mapping of labels
     label2id, id2label = dict(), dict()
@@ -62,16 +62,16 @@ def openMultiChannelImage(fpArr):
 
 
 def dataset_directory_small(dir_dataset, dir_extension=c_d.DATASET_SMALL):
-    dir_parent = erik_functions_files.dir_parent(dir_dataset)
+    dir_parent = e_f.dir_parent(dir_dataset)
     dir_base = os.path.basename(dir_dataset)
     dir_dataset_small = os.path.join(dir_parent, dir_base + dir_extension)
-    bExists = erik_functions_files.path_exists(dir_dataset_small)
+    bExists = e_f.path_exists(dir_dataset_small)
     return dir_dataset_small, bExists
 
 
 # create a small subsection from a large dataset
 def dataset_create_small(dir_dataset_files, nr_files_per_dir=1000, randomize_files=True, remove_old_dir_to=True, dir_extension=c_d.DATASET_SMALL):
-    dir_parent = erik_functions_files.dir_parent(dir_dataset_files)
+    dir_parent = e_f.dir_parent(dir_dataset_files)
     dir_base = os.path.basename(dir_dataset_files)
     dir_dataset_files_out = os.path.join(dir_parent, dir_base + dir_extension)
 
@@ -102,13 +102,13 @@ def dataset_create_train_test_val(dir_dataset_files, val_split=0.1, test_split=0
     dir_test = os.path.join(dir_split, c_d.DATASET_TEST)
 
     # get all path_files into lists
-    sub_dirs = erik_functions_files.dirs_in_dir(dir_dataset_files, full_path=True)
+    sub_dirs = e_f.dirs_in_dir(dir_dataset_files, full_path=True)
     print(sub_dirs)
 
     # create train, test, val dir
     for sub_dir in sub_dirs:
         base_dir = os.path.basename(sub_dir)
-        sub_dir_files = erik_functions_files.files_in_dir_full_path(sub_dir)
+        sub_dir_files = e_f.files_in_dir_full_path(sub_dir)
 
         train_paths, val_paths, test_paths = dataset_split(sub_dir_files, val_split, test_split)
 
@@ -118,9 +118,9 @@ def dataset_create_train_test_val(dir_dataset_files, val_split=0.1, test_split=0
 
         print(dir_train_sub)
 
-        erik_functions_files.copy_files(train_paths, dir_train_sub, delete_old=delete_old)
-        erik_functions_files.copy_files(val_paths, dir_val_sub, delete_old=delete_old)
-        erik_functions_files.copy_files(test_paths, dir_test_sub, delete_old=delete_old)
+        e_f.copy_files(train_paths, dir_train_sub, delete_old=delete_old)
+        e_f.copy_files(val_paths, dir_val_sub, delete_old=delete_old)
+        e_f.copy_files(test_paths, dir_test_sub, delete_old=delete_old)
 
 
 # create directory names from a basedir using train,val,test
@@ -143,11 +143,11 @@ def dataset_dirs_from_base(dataset_dir_base, dir_split=c_d.DATASET_SPLIT, dir_sm
 
 
 def flatten_dirs_to_list(dataset_dir):
-    sub_dirs = erik_functions_files.dirs_in_dir(dataset_dir, full_path=True)
+    sub_dirs = e_f.dirs_in_dir(dataset_dir, full_path=True)
     paths = []
 
     for sub_dir in sub_dirs:
-        files = erik_functions_files.files_in_dir_full_path(sub_dir)
+        files = e_f.files_in_dir_full_path(sub_dir)
         for file_unique in files:
             paths.append(file_unique)
     random.shuffle(paths)
@@ -155,16 +155,76 @@ def flatten_dirs_to_list(dataset_dir):
     return paths
 
 
-if __name__=='__main__':
-    dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_small'
+# returns the batchsize for a swin model with GPU memory 12GB
+def get_batchsize(model_name):
+    BATCH_SIZE = 32
+    if 'tiny' in model_name:
+        print('tiny')
+        BATCH_SIZE = 64
+        if 'window16' in model_name:
+            BATCH_SIZE = 38
+    elif 'small' in model_name:
+        print('small')
+        BATCH_SIZE = 32
+    elif 'base' in model_name:
+        if 'window8' in model_name:
+            print('base_window8')
+            BATCH_SIZE = 32
+        else:
+            print('base_window12+')
+            BATCH_SIZE = 16
+    elif 'large' in model_name:
+        print('large')
+        BATCH_SIZE = 4
+    print('batch size: ' + str(BATCH_SIZE))
+    return BATCH_SIZE
 
-    res = flatten_dirs_to_list(dir_dataset)
+
+# returns a new unused directory
+def create_data_dir(data_dir):
+    not_created_dir = True
+    counter = 1
+    check_if_exists_dir = data_dir
+    while not_created_dir:
+        if not(os.path.isdir(check_if_exists_dir)):
+            not_created_dir = False
+        else:
+            counter += 1
+            check_if_exists_dir = data_dir + '_' + str(counter)
+    return check_if_exists_dir
+
+
+# write a file. if file exists add number to ending
+def get_filename_unique(dir_file, filename):
+    counter = 1
+    file_exist = True
+
+    while file_exist:
+        filebase, ext = e_f.file_split_from_path(filename, must_exist=False)
+        file_test = filebase + str(counter) + ext
+        file_check = os.path.join(dir_file, file_test)
+        if not(os.path.isfile(file_check)):
+            return file_check
+        else:
+            counter += 1
+    return False
+
+
+
+
+
+if __name__=='__main__':
+    #dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_16'
+    #dir_dataset, _ = dataset_directory_small(dir_dataset, '_medium')
+
+    save_filename = os.path.join('figs', 'todo_')
+    save_filename = get_filename_unique(save_filename)
+    print(save_filename)
 
     pass
-
     #dataset_create_train_test_val(dir_dataset)
 
-    #dataset_create_small(dir_dataset, nr_files_per_dir=1000, randomize_files=True, remove_old_dir_to=True)
+    #dataset_create_small(dir_dataset, nr_files_per_dir=10000, randomize_files=True, remove_old_dir_to=True, dir_extension='_medium')
     #dataset_create_train_test_val(dir_dataset)
 
     #dir_dataset = r'C:\ai\datasets\eurosat\EuroSAT\2750_16'
