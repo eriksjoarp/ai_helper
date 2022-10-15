@@ -3,6 +3,7 @@ import torchvision.transforms as transforms
 from torchvision.datasets import ImageFolder
 import torchvision
 import datasets     # huggingface
+from datasets import load_dataset, load_metric
 
 from ai_helper import constants_dataset as c_d
 from ai_helper import constants_ai_h as c
@@ -14,6 +15,7 @@ from helper import helpers as h
 from helper import erik_functions_remote
 from helper import erik_functions_files
 from helper import constants_helper
+
 
 
 
@@ -127,6 +129,20 @@ def download_weights_realesr_gan(urls=c_d.URLS_WEIGHTS_GFP_GAN, path_save=c_d.DI
 # ToDo save a preprocessed dataset to disk in a good load format
 def dataset_save_to_disk(dataset, path_save, format_save):
     pass
+
+
+# load image dataset from imagefolders
+def dataset_load_from_imagefolder(dir_dataset_base, dataset_small=False):
+    #   def dataset_dirs_from_base(dataset_dir_base, dir_split=c_d.DATASET_SPLIT, dir_small=c_d.DATASET_SMALL, small=False):
+    train_dir_split, val_dir_split, test_dir_split = ds_l_h.dataset_dirs_from_base(dir_dataset_base, dir_small=dataset_small, small=dataset_small)
+    print(train_dir_split)
+
+    train_paths = ds_l_h.flatten_dirs_to_list(train_dir_split)
+    val_paths = ds_l_h.flatten_dirs_to_list(val_dir_split)
+    test_paths = ds_l_h.flatten_dirs_to_list(test_dir_split)
+
+    dataset = load_dataset("imagefolder", data_files={"train": train_paths, "test": test_paths, "val": val_paths}, cache_dir=c_d.DIR_DATASET_CACHE)
+    return dataset
 
 
 
