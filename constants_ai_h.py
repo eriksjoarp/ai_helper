@@ -20,11 +20,15 @@ DIR_LOGS = os.path.join(BASE_DIR_EXPERIMENTS, 'logs')
 DIR_RESULTS = os.path.join(BASE_DIR_EXPERIMENTS, 'results')
 
 DIR_CONFIGS = os.path.join(BASE_DIR_EXPERIMENTS, 'configs')
+DIR_CONFIGS_SWIN = os.path.join(DIR_CONFIGS, 'swin')
+
 DIR_AUGMENT_CONFIGS = os.path.join(DIR_CONFIGS, 'augment_configs')
 DIR_CONFIGS_EXPERIMENTS_TO_RUN = os.path.join(DIR_CONFIGS, 'experiments_to_run')
 DIR_CONFIGS_DEFAULTS = os.path.join(DIR_CONFIGS, 'configs_default')
 
 DIR_CONFIGS_RUN = os.path.join(DIR_CONFIGS_EXPERIMENTS_TO_RUN, 'experiments_run')
+DIR_LOCAL_FIGS = os.path.join(os.getcwd(), 'figs')
+
 
 '''
 experiments folder: running number plus
