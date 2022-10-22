@@ -17,8 +17,6 @@ from helper import erik_functions_files
 from helper import constants_helper
 
 
-
-
 # load one or all datasets from ctu13, None loads all rows
 def dataset_load_ctu13(CTU13_nr=1, NR_ROWS=None):
     ctu13_dataset = []
@@ -134,19 +132,19 @@ def dataset_save_to_disk(dataset, path_save, format_save):
 # load image dataset from imagefolders
 def dataset_load_from_imagefolder(dir_dataset_base, dataset_small=False):
     #   def dataset_dirs_from_base(dataset_dir_base, dir_split=c_d.DATASET_SPLIT, dir_small=c_d.DATASET_SMALL, small=False):
-    train_dir_split, val_dir_split, test_dir_split = ds_l_h.dataset_dirs_from_base(dir_dataset_base, dir_small=dataset_small, small=dataset_small)
+    train_dir_split, val_dir_split, test_dir_split = ds_l_h.dataset_dirs_from_base(dir_dataset_base, dir_split=c_d.DATASET_SPLIT, dir_small=c_d.DATASET_SMALL, small=dataset_small)
     print(train_dir_split)
 
     train_paths = ds_l_h.flatten_dirs_to_list(train_dir_split)
     val_paths = ds_l_h.flatten_dirs_to_list(val_dir_split)
     test_paths = ds_l_h.flatten_dirs_to_list(test_dir_split)
 
-    dataset = load_dataset("imagefolder", data_files={"train": train_paths, "test": test_paths, "val": val_paths}, cache_dir=c_d.DIR_DATASET_CACHE)
+    dataset = load_dataset('imagefolder', data_files={'train': train_paths, 'test': test_paths, 'val': val_paths}, cache_dir=c_d.DIR_DATASET_CACHE)
     return dataset
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     ctu13_1 = dataset_load_ctu13(1)
 
     print(ctu13_1.head())
