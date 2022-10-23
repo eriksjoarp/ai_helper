@@ -191,11 +191,12 @@ def create_data_dir(data_dir):
         else:
             counter += 1
             check_if_exists_dir = data_dir + '_' + str(counter)
-    return check_if_exists_dir
+    data_dir_new = check_if_exists_dir
+    return data_dir_new
 
 
 # write a file. if file exists add number to ending
-def get_filename_unique(dir_file, filename):
+def get_filename_unique(dir_file, filename, full_path=True):
     counter = 1
     file_exist = True
 
@@ -204,6 +205,8 @@ def get_filename_unique(dir_file, filename):
         file_test = filebase + str(counter) + ext
         file_check = os.path.join(dir_file, file_test)
         if not(os.path.isfile(file_check)):
+            if full_path:
+                file_check = os.path.join(os.getcwd(), file_check)
             return file_check
         else:
             counter += 1
