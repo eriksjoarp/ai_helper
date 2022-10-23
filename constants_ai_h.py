@@ -1,33 +1,37 @@
 import pathlib
 import os
+from os.path import join as j
 
 BASE_DIR_AI = r'C:\ai'
 BASE_DIR_PROJ = pathlib.Path(os.getcwd())
 BASE_DIR_GIT = BASE_DIR_PROJ.parent.absolute()
 BASE_DIR_EXPERIMENTS = r'C:\ai_experiments'
-BASE_DIR_RESULTS = os.path.join(BASE_DIR_AI, 'results')
+BASE_DIR_RESULTS = j(BASE_DIR_AI, 'results')
 
 # dataset directory
-DIR_EXPERIMENTS_SWIN = os.path.join(BASE_DIR_EXPERIMENTS, 'swin')
+DIR_EXPERIMENTS_SWIN = j(BASE_DIR_EXPERIMENTS, 'swin')
 
-DIR_AI_HELPER = os.path.join(BASE_DIR_GIT, 'ai_helper')
-DIR_HELPER = os.path.join(BASE_DIR_GIT, 'helper')
+DIR_AI_HELPER = j(BASE_DIR_GIT, 'ai_helper')
+DIR_HELPER = j(BASE_DIR_GIT, 'helper')
 
-DIR_DATASETS = os.path.join(BASE_DIR_AI, 'datasets')
+DIR_DATASETS = j(BASE_DIR_AI, 'datasets')
 DIR_DATASETS_LARGE = r'D:\ai\datasets'  #ToDo on another drive
-DIR_MODELS_SAVE = os.path.join(BASE_DIR_EXPERIMENTS, 'models_saved')
-DIR_LOGS = os.path.join(BASE_DIR_EXPERIMENTS, 'logs')
-DIR_RESULTS = os.path.join(BASE_DIR_EXPERIMENTS, 'results')
+DIR_MODELS_SAVE = j(BASE_DIR_EXPERIMENTS, 'models_saved')
+DIR_LOGS = j(BASE_DIR_EXPERIMENTS, 'logs')
+DIR_RESULTS = j(BASE_DIR_EXPERIMENTS, 'results')
 
-DIR_CONFIGS = os.path.join(BASE_DIR_EXPERIMENTS, 'configs')
-DIR_CONFIGS_SWIN = os.path.join(DIR_CONFIGS, 'swin')
+DIR_CONFIGS = j(BASE_DIR_EXPERIMENTS, 'configs')
+DIR_CONFIGS_SWIN = j(DIR_CONFIGS, 'swin')
 
-DIR_AUGMENT_CONFIGS = os.path.join(DIR_CONFIGS, 'augment_configs')
-DIR_CONFIGS_EXPERIMENTS_TO_RUN = os.path.join(DIR_CONFIGS, 'experiments_to_run')
-DIR_CONFIGS_DEFAULTS = os.path.join(DIR_CONFIGS, 'configs_default')
+DIR_AUGMENT_CONFIGS = j(DIR_CONFIGS, 'augment_configs')
+DIR_CONFIGS_EXPERIMENTS_TO_RUN = j(DIR_CONFIGS, 'experiments_to_run')
+DIR_CONFIGS_DEFAULTS = j(DIR_CONFIGS, 'configs_default')
 
-DIR_CONFIGS_RUN = os.path.join(DIR_CONFIGS_EXPERIMENTS_TO_RUN, 'experiments_run')
-DIR_LOCAL_FIGS = os.path.join(os.getcwd(), 'figs')
+DIR_CONFIGS_RUN = j(DIR_CONFIGS_EXPERIMENTS_TO_RUN, 'experiments_run')
+DIR_LOCAL_FIGS = j(os.getcwd(), 'figs')
+
+DIR_MODELS = j(BASE_DIR_AI, 'models')
+DIR_MODEL_CACHE = j(DIR_MODELS, 'model_cache')
 
 
 '''
