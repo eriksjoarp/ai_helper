@@ -143,7 +143,6 @@ def dataset_load_from_imagefolder(dir_dataset_base, dataset_small=False):
     return dataset
 
 
-
 if __name__ == '__main__':
     ctu13_1 = dataset_load_ctu13(1)
 
