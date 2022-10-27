@@ -5,7 +5,7 @@ pip3 install -r requirements
 
 # install pytorch with gpu support
 
-# conda -n create env_name python=3.8
+# conda -n create env_name python=3.9
 # conda activate env_name
 # conda install pytorch=1.12.1 torchvision torchaudio cudatoolkit=11.3 -c pytorch
 # pip install pandas matplotlib
