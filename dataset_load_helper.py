@@ -204,9 +204,11 @@ def get_filename_unique(dir_file, filename, full_path=True):
         filebase, ext = e_f.file_split_from_path(filename, must_exist=False)
         file_test = filebase + str(counter) + ext
         file_check = os.path.join(dir_file, file_test)
-        if not(os.path.isfile(file_check)):
+        file_check_full = os.path.join(os.getcwd(), dir_file, file_test)
+        if not(os.path.isfile(file_check_full)):
             if full_path:
                 file_check = os.path.join(os.getcwd(), file_check)
+            print(str(file_check))
             return file_check
         else:
             counter += 1
