@@ -2,6 +2,15 @@ import random
 import time
 from ai_helper import constants_ai_h as c
 
+
+def params_huggingface_project():
+    pass
+
+def params_huggingface_training():
+    pass
+
+
+
 def params():
     project_params_dict = {}
 
