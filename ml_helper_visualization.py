@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import numpy
 import numpy as np
 import torchvision
 from sklearn.metrics import confusion_matrix
@@ -6,10 +7,12 @@ import seaborn as sn
 import pandas as pd
 import torch
 import matplotlib.patches as patches
+from ai_helper import dataset_load_helper
+import seaborn as sns
 
 
 # images as numpyarrays
-def show_image_grid(images, grid_size_x, grid_size_y = False, labels = False, gray = False, permutate = True, plot_size=[15.00, 10.00]):
+def show_image_grid(images, grid_size_x, grid_size_y=False, labels=False, gray=False, permutate=True, plot_size=[15.00, 10.00]):
     if grid_size_y == False: grid_size_y = grid_size_x
     if len(images) < grid_size_y * grid_size_x:
         print('ERROR, too few images to show.')
@@ -167,6 +170,38 @@ def confusion_matrix_(net, testloader, path_save):
     plt.savefig(path_save)
 
 
+
+# calculate confusion matrix
+def conf_matrix(y, y_pred, path_save, filename_save, show_matrix=False, save_matrix=True, x_labels=None, y_labels=None, do_corr_matrix=True):
+    # y_pred = logreg.predict(X)  # Get the confusion matrix
+
+    matrix = confusion_matrix(y, y_pred)
+    if do_corr_matrix:
+        matrix = np.corrcoef(matrix)
+
+    mask = np.ones(matrix.shape, dtype=bool)
+    np.fill_diagonal(mask, 0)
+    max_value = matrix[mask].max()
+    min_value = matrix[mask].min()
+
+    path_save_unique = dataset_load_helper.get_filename_unique(path_save, filename_save)
+
+    fig_confusion, ax_confusion = plt.subplots(figsize=(15, 10))
+
+    if x_labels!=None:
+        sns_plot_cf = sns.heatmap(matrix, linewidths=1, annot=True, ax=ax_confusion, fmt='g', xticklabels=x_labels, yticklabels=y_labels, vmax=max_value, vmin=min_value)
+    else:
+        sns_plot_cf = sns.heatmap(matrix, linewidths=1, annot=True, ax=ax_confusion, fmt='g', vmax=max_value, vmin=min_value)
+    plt.savefig(path_save_unique)
+
+    if show_matrix:
+        plt.show()
+    else:
+        print(matrix)
+    return matrix
+
+
+# ToDo move to somewhere useful
 def plot_list(lista, show = True, save_path = None, label = ''):
     plt.plot(lista, color='magenta', marker='o',mfc='pink' ) #plot the data
     plt.xticks(range(0,len(lista)+1, 1)) #set the tick frequency on x-axis
