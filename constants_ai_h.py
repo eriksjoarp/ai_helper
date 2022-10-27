@@ -6,10 +6,12 @@ BASE_DIR_AI = r'C:\ai'
 BASE_DIR_PROJ = pathlib.Path(os.getcwd())
 BASE_DIR_GIT = BASE_DIR_PROJ.parent.absolute()
 BASE_DIR_EXPERIMENTS = r'C:\ai_experiments'
+BASE_DIR_EXPERIMENTS_LARGE = r'D:\ai_experiments'
 BASE_DIR_RESULTS = j(BASE_DIR_AI, 'results')
 
 # dataset directory
 DIR_EXPERIMENTS_SWIN = j(BASE_DIR_EXPERIMENTS, 'swin')
+DIR_EXPERIMENTS_SWIN_LARGE = j(BASE_DIR_EXPERIMENTS_LARGE, 'swin')
 
 DIR_AI_HELPER = j(BASE_DIR_GIT, 'ai_helper')
 DIR_HELPER = j(BASE_DIR_GIT, 'helper')
